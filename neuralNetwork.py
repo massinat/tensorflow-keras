@@ -7,7 +7,7 @@ class NeuralNetwork:
     _layers = None
 
     def __init__(self):
-        self._layers = [[]]
+        self._layers = []
 
     # Add a new layer of neurons to the current layers
     def addLayer(self, numberOfNeurons, inputSize, activationFunction):
@@ -26,7 +26,7 @@ class NeuralNetwork:
             lastLayerOutput = []
 
             for j in range(len(self._layers[i])):
-                lastLayerOutput.append(self._layers[i, j].output(currentInput))
+                lastLayerOutput.append(self._layers[i][j].output(currentInput))
 
             currentInput = lastLayerOutput
 
