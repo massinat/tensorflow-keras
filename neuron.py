@@ -1,5 +1,7 @@
 # A single neuron with configurable activation function
 
+import tensorflow as tf
+
 class Neuron:
     _weights = None
     _bias = None
@@ -19,7 +21,7 @@ class Neuron:
         self._activationFunction = activationFunction
 
     def predict(self, X):
-        return self._activationFunction(self._weights @ X.T + self._bias)
+        return self._activationFunction(tf.tensordot(self._weights, tf.transpose(X), 1) + self._bias)
 
     def updateWeights(self, newWeights):
         self._weights = newWeights

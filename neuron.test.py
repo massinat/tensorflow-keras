@@ -1,5 +1,5 @@
 import unittest
-import numpy as np
+import tensorflow as tf
 from neuron import Neuron
 
 class NeuronTest(unittest.TestCase):
@@ -7,34 +7,42 @@ class NeuronTest(unittest.TestCase):
     def test_init(self):
         activationFunction = lambda x: x
 
-        target = Neuron([1, 2, 3], 4, activationFunction)
+        weights = tf.constant([1, 2, 3])
+        bias = tf.constant(4)
 
-        self.assertEqual(target._weights, [1, 2, 3])
-        self.assertEqual(target.weights, [1, 2, 3])
-        self.assertEqual(target._bias, 4)
-        self.assertEqual(target.bias, 4)
-        self.assertEqual(target._activationFunction, activationFunction)
+        target = Neuron(weights, bias, activationFunction)
+
+        tf.debugging.assert_equal(target._weights, weights)
+        tf.debugging.assert_equal(target.weights, weights)
+        tf.debugging.assert_equal(target._bias, bias)
+        tf.debugging.assert_equal(target.bias, bias)
+        tf.debugging.assert_equal(target._activationFunction, activationFunction)
 
     def test_predict(self):
-        target = Neuron([1, 2, 3], 4, lambda x: x**2)
+        target = Neuron(tf.constant([1, 2, 3]), tf.constant(4), lambda x: x**2)
        
-        prediction = target.predict(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
+        prediction = target.predict(tf.constant([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
 
-        np.testing.assert_array_equal(prediction, np.array([324, 1296, 2916, 5184]))
+        tf.debugging.assert_equal(prediction, tf.constant([324, 1296, 2916, 5184]))
 
     def test_updateWeights(self):
-        target = Neuron([4, 5, 6], 7, lambda x: x)
-        self.assertEqual(target._weights, [4, 5, 6])
+        weights1 = tf.constant([4, 5, 6])
 
-        target.updateWeights([8, 9, 10])
-        self.assertEqual(target._weights, [8, 9, 10])
+        target = Neuron(weights1, 7, lambda x: x)
+        tf.debugging.assert_equal(target._weights, weights1)
+
+        weights2 = tf.constant([8, 9, 10])
+        target.updateWeights(weights2)
+        tf.debugging.assert_equal(target._weights, weights2)
 
     def test_updateBias(self):
-        target = Neuron([4, 5, 6], 7, lambda x: x)
-        self.assertEqual(target._bias, 7)
+        bias1 = tf.constant(7)
+        target = Neuron([4, 5, 6], bias1, lambda x: x)
+        self.assertEqual(target._bias, bias1)
 
-        target.updateBias(8)
-        self.assertEqual(target._bias, 8)
+        bias2 = tf.constant(8)
+        target.updateBias(bias2)
+        self.assertEqual(target._bias, bias2)
 
 if __name__=="__main__":
     unittest.main()

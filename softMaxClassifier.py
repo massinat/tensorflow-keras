@@ -13,14 +13,14 @@ class SoftMaxClassifier:
 
     def gradientDescent(self, X, y):
         optimazer = tf.keras.optimizers.Adam()
-        weights = [self._neuralNetwork.getWeightsForLayer(0)]
-        biases = [self._neuralNetwork.getBiasesForLayer(0)]
+        weights = tf.Variable([self._neuralNetwork.getWeightsForLayer(0)])
+        biases = tf.Variable([self._neuralNetwork.getBiasesForLayer(0)])
         
         for i in range(self._iterations):
             with tf.GradientTape() as tape:
                 
                 predictions = self._neuralNetwork.predict(X, weights, biases)
-                loss = self._crossEntropy(predictions, y)
+                loss = tf.Variable(self._crossEntropy(predictions, y))
                 
                 print(loss)
 
@@ -29,14 +29,18 @@ class SoftMaxClassifier:
                 print(biases)
 
                 gradients = tape.gradient(loss, [weights, biases])
-                optimazer.apply_gradients (zip(gradients, [weights, biases]))
+                optimazer.apply_gradients(zip(gradients, [weights, biases]))
 
                 # print(f"Iteration {i} completed.")
                 # print(weights)
                 # print(biases)
 
     def _crossEntropy(self, predictions, y):
-        return -1 * np.sum(np.log(y @ predictions.T))
+        #return -1 * np.sum(np.log(y @ predictions.T))
+        x_entropy = tf.nn.sigmoid_cross_entropy_with_logits (predictions, labels=y)
+        loss = tf.reduce_mean(x_entropy)
+
+        return loss
 
     # Accuracy calculated as: [number of instances where max probability index is equal to correct class] / [number of instances]
     def _calculateAccuracy(self, predictions, y):
