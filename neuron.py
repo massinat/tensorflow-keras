@@ -18,8 +18,11 @@ class Neuron:
         self._bias = initialBias
         self._activationFunction = activationFunction
 
-    def output(self, X):
+    def predict(self, X):
         return self._activationFunction(self._weights @ X.T + self._bias)
 
     def updateWeights(self, newWeights):
         self._weights = newWeights
+
+    def updateBias(self, newBias):
+        self._bias = newBias

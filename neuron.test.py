@@ -15,12 +15,12 @@ class NeuronTest(unittest.TestCase):
         self.assertEqual(target.bias, 4)
         self.assertEqual(target._activationFunction, activationFunction)
 
-    def test_output(self):
+    def test_predict(self):
         target = Neuron([1, 2, 3], 4, lambda x: x**2)
        
-        output = target.output(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
+        prediction = target.predict(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
 
-        np.testing.assert_array_equal(output, np.array([324, 1296, 2916, 5184]))
+        np.testing.assert_array_equal(prediction, np.array([324, 1296, 2916, 5184]))
 
     def test_updateWeights(self):
         target = Neuron([4, 5, 6], 7, lambda x: x)
@@ -28,6 +28,13 @@ class NeuronTest(unittest.TestCase):
 
         target.updateWeights([8, 9, 10])
         self.assertEqual(target._weights, [8, 9, 10])
+
+    def test_updateBias(self):
+        target = Neuron([4, 5, 6], 7, lambda x: x)
+        self.assertEqual(target._bias, 7)
+
+        target.updateBias(8)
+        self.assertEqual(target._bias, 8)
 
 if __name__=="__main__":
     unittest.main()

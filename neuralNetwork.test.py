@@ -40,13 +40,13 @@ class NeuralNetworkTest(unittest.TestCase):
 
         np.testing.assert_array_equal(target.getBiasesForLayer(0), np.zeros([10]))
 
-    def test_output(self):
+    def test_predict(self,):
         target = NeuralNetwork()
         target.addLayer(10, 10, lambda x: x**2)
 
-        output = target.output(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+        prediction = target.predict(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), [np.zeros([10, 10])], [np.zeros([10])])
 
-        np.testing.assert_array_equal(output, np.zeros([10]))
+        np.testing.assert_array_equal(prediction, np.zeros([10]))
 
 if __name__=="__main__":
     unittest.main()

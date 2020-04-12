@@ -25,14 +25,16 @@ class NeuralNetwork:
         return [x.bias for x in self._layers[layer]]
 
     # Fast forward pass
-    def output(self, X):
+    def predict(self, X, weights, biases):
         currentInput = X
 
         for i in range(len(self._layers)):
             lastLayerOutput = []
 
             for j in range(len(self._layers[i])):
-                lastLayerOutput.append(self._layers[i][j].output(currentInput))
+                self._layers[i][j].updateWeights(weights[i][j])
+                self._layers[i][j].updateBias(biases[i][j])
+                lastLayerOutput.append(self._layers[i][j].predict(currentInput))
 
             currentInput = lastLayerOutput
 
