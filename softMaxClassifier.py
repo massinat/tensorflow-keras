@@ -12,15 +12,27 @@ class SoftMaxClassifier:
         self._iterations = iterations
 
     def gradientDescent(self, X, y):
+        optimazer = tf.keras.optimizers.Adam()
 
         for i in range(self._iterations):
             with tf.GradientTape() as tape:
+                weights = tf.Variable(self._neuralNetwork.getWeightsForLayer(0))
+                biases = tf.Variable(self._neuralNetwork.getBiasesForLayer(0))
                 predictions = self._neuralNetwork.output(X)
-                loss = self._crossEntropy(predictions, y)
+                loss = tf.Variable(self._crossEntropy(predictions, y))
+                
                 print(loss)
 
-                gradients = tape.gradient(loss, [])
+                print(f"Iteration {i} started.")
+                print(weights)
+                print(biases)
 
+                gradients = tape.gradient(loss, [weights, biases])
+                optimazer.apply_gradients (zip(gradients, [weights, biases]))
+
+                print(f"Iteration {i} completed.")
+                print(weights)
+                print(biases)
 
     def _crossEntropy(self, predictions, y):
         return -1 * np.sum(np.log(y @ predictions.T))
