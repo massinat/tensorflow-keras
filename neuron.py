@@ -5,6 +5,14 @@ class Neuron:
     _bias = None
     _activationFunction = None
 
+    @property
+    def weights(self):
+        return self._weights
+
+    @property
+    def bias(self):
+        return self._bias
+
     def __init__(self, initialWeights, initialBias, activationFunction):
         self._weights = initialWeights
         self._bias = initialBias

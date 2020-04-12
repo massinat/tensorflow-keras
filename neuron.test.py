@@ -10,7 +10,9 @@ class NeuronTest(unittest.TestCase):
         target = Neuron([1, 2, 3], 4, activationFunction)
 
         self.assertEqual(target._weights, [1, 2, 3])
+        self.assertEqual(target.weights, [1, 2, 3])
         self.assertEqual(target._bias, 4)
+        self.assertEqual(target.bias, 4)
         self.assertEqual(target._activationFunction, activationFunction)
 
     def test_output(self):

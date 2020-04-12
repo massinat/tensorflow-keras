@@ -28,13 +28,25 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertEqual(target._layers[1][0]._bias, 0)
         self.assertEqual(target._layers[1][0]._activationFunction, activationFunction2)
 
+    def test_getWeightsForLayer(self):
+        target = NeuralNetwork()
+        target.addLayer(10, 20, lambda x: x**2)
+
+        np.testing.assert_array_equal(target.getWeightsForLayer(0), np.zeros([10, 20]))
+
+    def test_getBiasesForLayer(self):
+        target = NeuralNetwork()
+        target.addLayer(10, 20, lambda x: x**2)
+
+        np.testing.assert_array_equal(target.getBiasesForLayer(0), np.zeros([10]))
+
     def test_output(self):
         target = NeuralNetwork()
         target.addLayer(10, 10, lambda x: x**2)
 
         output = target.output(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
 
-        self.assertEqual(output, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        np.testing.assert_array_equal(output, np.zeros([10]))
 
 if __name__=="__main__":
     unittest.main()

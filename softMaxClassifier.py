@@ -14,9 +14,12 @@ class SoftMaxClassifier:
     def gradientDescent(self, X, y):
 
         for i in range(self._iterations):
-            with tf.GradientTape as tape:
+            with tf.GradientTape() as tape:
                 predictions = self._neuralNetwork.output(X)
                 loss = self._crossEntropy(predictions, y)
+                print(loss)
+
+                gradients = tape.gradient(loss, [])
 
 
     def _crossEntropy(self, predictions, y):

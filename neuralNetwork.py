@@ -18,6 +18,12 @@ class NeuralNetwork:
         
         self._layers.append(newLayer)
 
+    def getWeightsForLayer(self, layer):
+        return [x.weights for x in self._layers[layer]]
+
+    def getBiasesForLayer(self, layer):
+        return [x.bias for x in self._layers[layer]]
+
     # Fast forward pass
     def output(self, X):
         currentInput = X
@@ -30,4 +36,4 @@ class NeuralNetwork:
 
             currentInput = lastLayerOutput
 
-        return lastLayerOutput
+        return np.array(lastLayerOutput)
