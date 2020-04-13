@@ -1,6 +1,6 @@
 # A neural network composed by multiple layers and neurons
 
-import numpy as np
+import tensorflow as tf
 from neuron import Neuron
 
 class NeuralNetwork:
@@ -14,7 +14,7 @@ class NeuralNetwork:
         newLayer = []
 
         for i in range(numberOfNeurons):
-            newLayer.append(Neuron(np.zeros(inputSize), 0, activationFunction))
+            newLayer.append(Neuron(tf.zeros(inputSize), tf.Variable(0, dtype=tf.dtypes.float32), activationFunction))
         
         self._layers.append(newLayer)
 
@@ -38,4 +38,4 @@ class NeuralNetwork:
 
             currentInput = lastLayerOutput
 
-        return np.array(lastLayerOutput)
+        return tf.Variable(lastLayerOutput, dtype=tf.dtypes.float32)
