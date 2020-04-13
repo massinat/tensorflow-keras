@@ -14,7 +14,7 @@ class NeuralNetwork:
         newLayer = []
 
         for i in range(numberOfNeurons):
-            newLayer.append(Neuron(tf.zeros(inputSize), tf.Variable(0, dtype=tf.dtypes.float32), activationFunction))
+            newLayer.append(Neuron(tf.random.uniform(shape=[inputSize]), tf.random.uniform(shape=[1]), activationFunction))
         
         self._layers.append(newLayer)
 

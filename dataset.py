@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow as tf
 from keras.utils import np_utils
 
@@ -6,9 +7,9 @@ class Dataset:
     def __init__(self):
         loadedData = self._load()
 
-        self._XTrain = loadedData[0]
+        self._XTrain = np.float32(loadedData[0])
         self._yTrain = loadedData[1]
-        self._XTest = loadedData[2]
+        self._XTest = np.float32(loadedData[2])
         self._yTest = loadedData[3]
 
     @property
