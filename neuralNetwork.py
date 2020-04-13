@@ -7,6 +7,7 @@ class NeuralNetwork:
     _layers = None
 
     def __init__(self):
+        tf.random.set_seed(5)
         self._layers = []
 
     # Add a new layer of neurons to the current layers
