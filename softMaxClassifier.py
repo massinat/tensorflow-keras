@@ -22,7 +22,7 @@ class SoftMaxClassifier:
                 loss = tf.Variable(self._crossEntropy(predictions, y))
                 
                 #print(loss)
-                print(predictions)
+                #print(predictions)
 
                 #print(f"Iteration {i} started.")
                 #print(weights)

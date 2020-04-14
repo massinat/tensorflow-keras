@@ -11,11 +11,11 @@ class NeuralNetwork:
         self._layers = []
 
     # Add a new layer of neurons to the current layers
-    def addLayer(self, numberOfNeurons, inputSize, activationFunction):
+    def addLayer(self, numberOfNeurons, inputSize):
         newLayer = []
 
         for i in range(numberOfNeurons):
-            newLayer.append(Neuron(tf.random.uniform(shape=[inputSize]), tf.random.uniform(shape=[1]), activationFunction))
+            newLayer.append(Neuron(tf.random.uniform(shape=[inputSize]), tf.random.uniform(shape=[1])))
         
         self._layers.append(newLayer)
 
@@ -27,16 +27,16 @@ class NeuralNetwork:
 
     # Fast forward pass
     def predict(self, X, weights, biases):
-        currentInput = X
+        return self._predictWithSoftMax(X, self._layers[0])
 
-        for i in range(len(self._layers)):
-            lastLayerOutput = []
+    def _predictWithSoftMax(self, X, neurons):
+        output = []
 
-            for j in range(len(self._layers[i])):
-                self._layers[i][j].updateWeights(weights[i][j])
-                self._layers[i][j].updateBias(biases[i][j])
-                lastLayerOutput.append(self._layers[i][j].predict(currentInput))
+        for i in range(len(neurons)):
+            output.append(tf.math.exp(neurons[i].predict(X)))
 
-            currentInput = lastLayerOutput
+        #divisors = tf.reduce_sum(output, axis=0)
+        #print(divisors)
+        print(output)
 
-        return tf.Variable(lastLayerOutput, dtype=tf.dtypes.float32)
+        return output

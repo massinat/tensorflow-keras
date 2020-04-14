@@ -5,7 +5,6 @@ import tensorflow as tf
 class Neuron:
     _weights = None
     _bias = None
-    _activationFunction = None
 
     @property
     def weights(self):
@@ -15,13 +14,12 @@ class Neuron:
     def bias(self):
         return self._bias
 
-    def __init__(self, initialWeights, initialBias, activationFunction):
+    def __init__(self, initialWeights, initialBias):
         self._weights = initialWeights
         self._bias = initialBias
-        self._activationFunction = activationFunction
 
     def predict(self, X):
-        return self._activationFunction(tf.tensordot(self._weights, tf.transpose(X), 1) + self._bias)
+        return tf.tensordot(self._weights, tf.transpose(X), 1) + self._bias
 
     def updateWeights(self, newWeights):
         self._weights = newWeights
